@@ -1,0 +1,181 @@
+/* Общая сброска */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Обёртка на весь экран */
+html, body {
+  height: 100%;
+}
+
+/* Основное тело сайта как flex-контейнер */
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  background: #0a0a0a;
+  font-family: 'Futura', sans-serif;
+  color: #f6cacc;
+  overflow-x: hidden;
+}
+
+/* Хедер */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(26, 26, 26, 0.85);
+  padding: 10px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 999;
+  transition: transform 0s linear;
+  backdrop-filter: blur(6px);
+}
+
+/* Скрытое состояние хедера */
+header.hidden {
+  transform: translateY(-100%);
+}
+
+header h1 {
+  font-size: 3em;
+  color: #ff0055;
+  letter-spacing: -1px;
+}
+header h2 {
+  font-size: 2em;
+  color: #ff0055;
+  letter-spacing: -1px;
+}
+
+nav {
+  text-align: right;
+}
+nav a {
+  display: block;
+  font-size: 2em;
+  margin-bottom: 8px;
+  color: #f6cacc;
+  text-decoration: none;
+}
+nav a:hover {
+  color: #ff0055;
+}
+
+main {
+  margin-top: 80px;
+  flex: 1;
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Карточки */
+.card {
+  background: #1f1f1f;
+  padding: 20px;
+  border-left: 5px solid #ff0055;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 12px rgba(255, 0, 85, 0.5);
+}
+
+.card.expanded {
+  transform: scale(1.2);
+  z-index: 10;
+  box-shadow: 0 15px 25px rgba(255, 0, 85, 0.8);
+}
+
+.card img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+/* Описание, которое появляется при увеличении */
+.card-description {
+  display: none;
+  padding: 15px;
+  background: #1f1f1f;
+  color: #f6cacc;
+  font-size: 1em;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 2px solid #ff0055;
+  border-radius: 0 0 4px 4px;
+  box-sizing: border-box;
+}
+
+.card.expanded .card-description {
+  display: block;
+}
+
+footer {
+  background: #000;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #777;
+}
+
+.page-header {
+  padding: 10px 30px;
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+.club-name {
+  font-size: 3em;
+  color: #ff0055;
+  margin-bottom: 10px;
+  letter-spacing: -1px;
+}
+
+.page-title {
+  font-size: 1.8em;
+  color: #f6cacc;
+  opacity: 0.9;
+  margin-bottom: 5px;
+}
+
+.random-phrase {
+  font-size: 1em;
+  color: #aaa;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
