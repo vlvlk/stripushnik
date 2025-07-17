@@ -263,14 +263,6 @@ footer {
   text-shadow: 1px 1px 2px #0a0a0a;
 }
 
-.random-phrase {
-  font-size: 1em;
-  color: #ffaad4;
-  font-style: italic;
-  margin-top: 10px;
-  text-shadow: 0 0 3px #ffaad4;
-}
-
 .container {
   max-width: 1600px;
   margin: 0 auto;
@@ -378,8 +370,677 @@ nav a:hover {
 }
 
 .logo {
-  height: 100px;
+  height: 300px;
   width: auto;
   max-width: 100%;
   display: block;
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1002;
+}
+
+.burger span {
+  width: 100%;
+  height: 3px;
+  background: #ff0055;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 600px) {
+  nav.nav-menu {
+    position: fixed;
+    top: 70px;
+    right: 0;
+    background: rgba(20, 10, 20, 0.95);
+    width: 70vw;
+    height: 100vh;
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -5px 0 20px rgba(255, 0, 85, 0.7);
+    z-index: 1001;
+  }
+
+  nav.nav-menu.open {
+    transform: translateX(0);
+  }
+
+  nav.nav-menu a {
+    font-size: 1.5em;
+    color: #ff77aa;
+  }
+
+  nav.nav-menu a:hover {
+    color: #fff;
+    text-shadow: 0 0 10px #ff3377, 0 0 20px #ff0055;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  /* Анимация иконки бургера */
+  .burger.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .burger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .burger.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+}
+
+@media (max-width: 600px) {
+  /* Компактный хедер: строка, высота 60px */
+  header {
+    flex-direction: row;
+    height: 60px;
+    padding: 10px 20px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Меню-навигатор под хедером с правильным отступом */
+  nav.nav-menu {
+    position: fixed;
+    top: 60px; /* совпадает с высотой хедера */
+    right: 0;
+    background: rgba(20, 10, 20, 0.95);
+    width: 70vw;
+    height: calc(100vh - 60px);
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -5px 0 20px rgba(255, 0, 85, 0.7);
+    z-index: 1001;
+  }
+
+  nav.nav-menu.open {
+    transform: translateX(0);
+  }
+
+  nav.nav-menu a {
+    font-size: 1.5em;
+    color: #ff77aa;
+  }
+
+  nav.nav-menu a:hover {
+    color: #fff;
+    text-shadow: 0 0 10px #ff3377, 0 0 20px #ff0055;
+  }
+
+  /* Бургер виден и центрируется по высоте */
+  .burger {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-bottom: 40px;
+  }
+
+  /* Контент отступает вниз, чтобы не залезать под фиксированный хедер */
+  .container {
+    margin-top: 60px;
+    padding: 0 15px;
+  }
+
+  /* Высота картинок и размер шрифтов для карточек */
+  .card img {
+    height: 200px;
+  }
+
+  nav a {
+    font-size: 1.2em;
+  }
+
+  footer {
+    padding: 40px 20px;
+  }
+
+  .card-overlay {
+    padding: 20px;
+  }
+
+  .card-overlay .description-text {
+    font-size: 1em;
+  }
+
+  /* Анимация иконки бургера */
+  .burger.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .burger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .burger.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    padding: 0px 16px;
+    gap: 10px;
+  }
+
+  .logo-title {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  header h1, header h2 {
+    font-size: 1em;
+    line-height: 1.2;
+  }
+
+  .burger {
+    flex-shrink: 0;
+  }
+
+  .page-header {
+    padding: 0px 15px;
+    margin-top: 10px;
+  }
+
+  .club-name {
+    font-size: 1.3em;
+    margin-bottom: 6px;
+  }
+
+  .page-title {
+    font-size: 1em;
+  }
+}
+
+/* === Адаптивный хедер и бургер === */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: black;
+  color: white;
+  padding: 8px 16px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-title img.logo {
+  width: 100px;
+  height: auto;
+}
+
+.club-name {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.page-title {
+  font-size: 0.9rem;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Бургер */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 110;
+}
+
+.burger span {
+  display: block;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+}
+
+/* Навигация */
+.nav-menu {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* разрешает перенос элементов на новую строку */
+}
+
+nav a {
+  display: inline-block; /* или inline-flex */
+  white-space: nowrap;   /* чтобы слова в ссылках не переносились */
+  font-size: clamp(1em, 2vw, 2em); /* адаптивный размер шрифта */
+  margin-bottom: 0; /* убрать нижний отступ */
+}
+
+.nav-menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .burger {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    flex-direction: column;
+    background: black;
+    padding: 10px 20px;
+    gap: 10px;
+    display: none;
+  }
+
+  .nav-menu.open {
+    display: flex;
+  }
+}
+
+.page-header {
+  margin-right: 20px; /* минимальное расстояние справа */
+}
+
+@media (max-width: 600px) {
+  .page-header {
+    display: flex;
+    justify-content: space-between; /* элементы слева и справа */
+    align-items: center; /* вертикальное центрирование */
+    flex-wrap: nowrap; /* запрет переноса */
+  }
+}
+
+/* Базовые размеры */
+.club-name {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+.page-title {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.random-phrase {
+  font-size: 1rem;
+  color: #ffaad4;
+  margin-left: 50px;
+  margin-top: 10px;
+  font-style: italic;
+  text-shadow: 0 0 3px #ffaad4;
+  text-align: left;
+  flex: 1 1 auto;
+}
+
+/* Контейнер заголовка */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  padding: 10px 30px;
+}
+
+/* Медиазапросы для разных экранов */
+
+/* Большие экраны */
+@media (min-width: 1025px) {
+  .club-name {
+    font-size: 2.4rem;
+  }
+  .page-title {
+    font-size: 1.8rem;
+  }
+  .random-phrase {
+    font-size: 1.2rem;
+    margin-top: 0;
+    max-width: 250px;
+  }
+}
+
+/* Средние экраны — планшеты */
+@media (max-width: 1024px) and (min-width: 601px) {
+  .club-name {
+    font-size: 1.8rem;
+    margin-right: 20px;
+  }
+  .page-title {
+    font-size: 1.2rem;
+  }
+  .random-phrase {
+    display: none;
+  }
+  .page-header {
+    padding: 8px 20px;
+  }
+}
+
+/* Маленькие экраны — телефоны */
+@media (max-width: 600px) {
+
+  .club-name {
+    font-size: 1.3rem;
+    margin-bottom: 0;
+    flex: 1 1 auto;
+  }
+
+  .page-title {
+    font-size: 1rem;
+    opacity: 0.85;
+    flex: 1 1 auto;
+  }
+
+  .random-phrase {
+    display: none;
+  }
+
+}
+
+/* Скрываем бургер на широких экранах, показываем меню горизонтально */
+.burger {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 25px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  z-index: 110;
+}
+
+.burger span {
+  width: 100%;
+  height: 3px;
+  background: #ff0055;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Меню по умолчанию горизонтальное и видно */
+.nav-menu {
+  display: flex;
+  gap: 20px;
+  flex-wrap: nowrap;
+}
+
+/* Адаптив для узких экранов */
+@media (max-width: 768px) {
+  .burger {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 60px; /* высота хедера */
+    right: 0;
+    background: rgba(20, 10, 20, 0.95);
+    width: 70vw;
+    height: calc(100vh - 60px);
+    padding: 40px 20px;
+    flex-direction: column;
+    gap: 20px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -5px 0 20px rgba(255, 0, 85, 0.7);
+    z-index: 1001;
+  }
+
+  /* Открытое меню */
+  .nav-menu.open {
+    transform: translateX(0);
+  }
+}
+
+/* Анимация бургера при открытии */
+.burger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  margin-right: 16px;
+  margin-top: 6px;
+  z-index: 110;
+  transition: all 0.3s ease;
+}
+
+.burger span {
+  height: 3px;
+  background: #ff0055;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* BURGER: Показываем на экранах до 768px */
+@media (max-width: 768px) {
+  .burger {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    width: 70vw;
+    height: calc(100vh - 60px);
+    background: rgba(20, 10, 20, 0.95);
+    flex-direction: column;
+    padding: 40px 20px;
+    gap: 20px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -5px 0 20px rgba(255, 0, 85, 0.7);
+    z-index: 1001;
+  }
+
+  .nav-menu.open {
+    transform: translateX(0);
+  }
+}
+
+/* Анимация открытия */
+.burger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.burger.open span:nth-child(2) {
+  opacity: 0;
+}
+.burger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Универсальные стили для бургера */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 36px; /* стало больше */
+  height: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1101; /* выше, чем header и nav */
+  margin: 10px 16px 0 auto;
+}
+
+.burger span {
+  display: block;
+  height: 4px;
+  background: #f05;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Стили крестика закрытия */
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2.5em;
+  color: #f7a;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1102; /* выше, чем всё */
+}
+
+/* Меню */
+@media (max-width: 800px) {
+  .burger {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    flex-direction: column;
+    background: rgba(20,10,20,0.95);
+    padding: 40px 20px;
+    gap: 20px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -5px 0 20px rgba(255, 0, 85, 0.7);
+    z-index: 1100;
+    display: none; /* по умолчанию скрыто */
+  }
+
+  .nav-menu.open {
+    display: flex;
+    transform: translateX(0);
+  }
+
+  .nav-menu a {
+    font-size: 1.5em;
+    color: #f7a;
+  }
+
+  .nav-menu a:hover {
+    color: #fff;
+    text-shadow: 0 0 10px #ff3377, 0 0 20px #f05;
+  }
+}
+
+/* Анимация крестика */
+.burger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.card-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 48px;
+  height: 48px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 9999;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button::before,
+.close-button::after {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 3px;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+}
+
+.close-button::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close-button::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }

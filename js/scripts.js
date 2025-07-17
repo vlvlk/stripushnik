@@ -1,22 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Вставка меню
+  // --- Вставка меню и бургера ---
   const navHTML = `
-    <nav>
-       <a href="index.html">Главная</a>
-       <a href="menu.html">Меню</a>
-       <a href="staff.html">Персонал</a>
-       <a href="shift.html">На смене</a>
-       <a href="prices.html">Цены</a>
+    <nav class="nav-menu" id="nav-menu">
+      <a href="index.html">Главная</a>
+      <a href="menu.html">Меню</a>
+      <a href="staff.html">Персонал</a>
+      <a href="shift.html">На смене</a>
+      <a href="prices.html">Цены</a>
     </nav>
+    <button class="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   `;
+
   const header = document.querySelector("header");
   if (header && !header.querySelector("nav")) {
     header.insertAdjacentHTML("beforeend", navHTML);
   }
 
-  // Вставка футера
-  const footer = document.querySelector("footer");
-  if (!footer) {
+  const burger = document.querySelector('.burger');
+  const navMenu = document.querySelector('.nav-menu');
+
+  if (burger && navMenu) {
+    burger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = burger.classList.toggle('open');
+      navMenu.classList.toggle('open');
+      burger.setAttribute('aria-expanded', isOpen);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !burger.contains(e.target)) {
+        navMenu.classList.remove('open');
+        burger.classList.remove('open');
+        burger.setAttribute('aria-expanded', false);
+      }
+    });
+  }
+
+  // --- Вставка футера ---
+  if (!document.querySelector("footer")) {
     const footerHTML = `
       <footer>
         &copy; 2025 Pan iz Polshi. Эстетика страсти.
@@ -26,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.insertAdjacentHTML("beforeend", footerHTML);
   }
 
-  // Случайные фразы
+  // --- Случайные фразы ---
   const phrases = [
     "Где грех становится искусством",
     "Ночь — наша сцена",
@@ -45,46 +70,32 @@ document.addEventListener("DOMContentLoaded", () => {
     phrase.textContent = phrases[Math.floor(Math.random() * phrases.length)];
   }
 
-  // --- Логика оверлея карточки ---
+  // --- Оверлей карточек ---
   const cards = document.querySelectorAll('.card');
-
-  const createOverlay = (card) => {
-    const img = card.querySelector('img');
-    const description = card.querySelector('.card-description');
-
-    if (!img || !description) return;
-
-    const overlay = document.createElement('div');
-    overlay.classList.add('card-overlay');
-
-    overlay.innerHTML = `
-      <button class="close-button" aria-label="Закрыть">&times;</button>
-      <img src="${img.src}" alt="">
-      <div class="description-text">${description.innerHTML}</div>
-    `;
-
-    document.body.appendChild(overlay);
-
-    // Закрытие по кнопке
-    overlay.querySelector('.close-button').addEventListener('click', () => {
-      overlay.remove();
-    });
-
-    // Закрытие по клику вне контента
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) overlay.remove();
-    });
-  };
-
-  // Навешиваем обработчик клика на карточки
   cards.forEach(card => {
     card.addEventListener('click', () => {
-      createOverlay(card);
+      const img = card.querySelector('img');
+      const description = card.querySelector('.card-description');
+      if (!img || !description) return;
+
+      const overlay = document.createElement('div');
+      overlay.classList.add('card-overlay');
+      overlay.innerHTML = `
+        <button class="close-button" aria-label="Закрыть">&times;</button>
+        <img src="${img.src}" alt="">
+        <div class="description-text">${description.innerHTML}</div>
+      `;
+      document.body.appendChild(overlay);
+
+      overlay.querySelector('.close-button').addEventListener('click', () => overlay.remove());
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) overlay.remove();
+      });
     });
   });
 });
 
-// --- Логика автоскрытия хедера при скролле ---
+// --- Скролл: автоскрытие хедера ---
 const header = document.querySelector('header');
 let lastScrollY = window.scrollY;
 let currentOffset = 0;
