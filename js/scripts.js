@@ -44,8 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!document.querySelector("footer")) {
     const footerHTML = `
       <footer>
-        &copy; 2025 Pan iz Polshi. Эстетика страсти.
-        <p>Ул. Пушкина, д. Колотушкина</p>
+        &copy; 2025 VIP Club, стриптиз-клуб
+        <p>Г. Казань, Лево-Булачная улица, 50</p>
       </footer>
     `;
     document.body.insertAdjacentHTML("beforeend", footerHTML);
@@ -53,9 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Случайные фразы ---
   const phrases = [
-    "Где грех становится искусством",
     "Ночь — наша сцена",
-    "Каждое движение — как признание",
     "Ты ещё не был здесь…",
     "Эстетика без вульгарности",
     "Тени, свет и тело",
