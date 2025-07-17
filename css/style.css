@@ -342,3 +342,25 @@ footer {
   border-radius: 10px;
   margin-top: 20px;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+header h1, header h2, .club-name, .page-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  height: 100px;
+  width: auto;
+}
