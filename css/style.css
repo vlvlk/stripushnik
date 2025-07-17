@@ -12,15 +12,15 @@ html, body {
 
 /* Основное тело сайта как flex-контейнер */
 body {
-  margin: 0;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-
-  background: #0a0a0a;
-  font-family: 'Futura', sans-serif;
-  color: #f6cacc;
-  overflow-x: hidden;
+  background:
+    linear-gradient(-45deg, #0a0a0a, #1a0a12, #1f0d1f, #0a0a0a),
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><g fill="none" stroke="%23ff0055" stroke-opacity="0.05"><circle cx="30" cy="30" r="29"/></g></svg>');
+  background-size: 400% 400%, 60px 60px;
+  background-blend-mode: overlay;
+  animation: backgroundGlow 25s ease infinite;
 }
 
 /* Хедер */
@@ -29,14 +29,16 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(26, 26, 26, 0.85);
+  background: linear-gradient(90deg, rgba(40, 0, 40, 0.85), rgba(60, 0, 60, 0.85));
   padding: 10px 30px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   z-index: 999;
   transition: transform 0s linear;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 0, 85, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 0, 85, 0.1);
 }
 
 /* Скрытое состояние хедера */
@@ -62,17 +64,21 @@ nav a {
   display: block;
   font-size: 2em;
   margin-bottom: 8px;
-  color: #f6cacc;
+  color: #ff77aa;
   text-decoration: none;
+  transition: color 0.3s, text-shadow 0.3s;
 }
+
 nav a:hover {
-  color: #ff0055;
+  color: #fff;
+  text-shadow: 0 0 10px #ff3377, 0 0 20px #ff0055;
 }
 
 main {
-  margin-top: 80px;
   flex: 1;
+  margin-top: 80px;
   padding: 20px;
+  color: #ffe1ec;
 }
 
 .grid {
@@ -80,6 +86,7 @@ main {
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   margin-top: 20px;
+  align-items: stretch; /* Растягиваем карточки по высоте */
 }
 
 @media (max-width: 600px) {
@@ -89,26 +96,24 @@ main {
 }
 
 /* Карточки */
+.grid > * {
+  height: 100%; /* Чтобы карточки занимали всю высоту ячейки */
+}
+
 .card {
-  background: #1f1f1f;
+  background: #2b0f1c;
   padding: 20px;
   border-left: 5px solid #ff0055;
-  position: relative;
+  border-radius: 10px;
+  position: relative; /* Важно для абсолютного позиционирования описания */
   cursor: pointer;
-  overflow: hidden;
+  overflow: visible; /* Чтобы описание могло выходить за пределы, если надо */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-}
+  box-shadow: 0 4px 10px rgba(255, 0, 85, 0.3);
 
-.card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 8px 12px rgba(255, 0, 85, 0.5);
-}
-
-.card.expanded {
-  transform: scale(1.2);
-  z-index: 10;
-  box-shadow: 0 15px 25px rgba(255, 0, 85, 0.8);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .card img {
@@ -117,65 +122,175 @@ main {
   object-fit: cover;
   margin-bottom: 10px;
   border-radius: 4px;
+  flex-shrink: 0;
 }
 
-/* Описание, которое появляется при увеличении */
+.card p {
+  font-size: 1.2em;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 6px;
+  line-height: 1.4;
+  backdrop-filter: blur(3px);
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(255, 0, 85, 0.6);
+}
+
+.card.expanded {
+  transform: scale(1.15);
+  z-index: 10;
+  box-shadow: 0 20px 30px rgba(255, 0, 85, 0.8);
+}
+
+/* Описание абсолютное внутри карточки */
 .card-description {
-  display: none;
-  padding: 15px;
-  background: #1f1f1f;
-  color: #f6cacc;
-  font-size: 1em;
   position: absolute;
-  bottom: 0;
   left: 0;
   right: 0;
+  bottom: 0;
+  background: rgba(20, 10, 20, 0.9);
+  color: #ffe1ec;
+  font-size: 1.1em;
+  padding: 15px 20px 20px 20px;
   border-top: 2px solid #ff0055;
-  border-radius: 0 0 4px 4px;
+  border-radius: 0 0 10px 10px;
+  backdrop-filter: blur(4px);
+  line-height: 1.5;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
   box-sizing: border-box;
+  z-index: 5;
 }
 
 .card.expanded .card-description {
-  display: block;
+  max-height: 500px; /* подстрой по содержанию */
+  opacity: 1;
+}
+
+/* Для .card.expanded увеличим padding-bottom, чтобы описание не накладывалось на контент */
+.card.expanded {
+  padding-bottom: 120px; /* подстраивай по высоте описания */
+  z-index: 10;
+  transform: scale(1.15);
+  box-shadow: 0 20px 30px rgba(255, 0, 85, 0.8);
+}
+
+.card-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 0, 10, 0.97);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  overflow: hidden; /* чтобы контент не вылазил за границы */
+  animation: fadeIn 0.3s ease;
+}
+
+.card-overlay img {
+  width: 100%;
+  max-height: 60vh;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.card-overlay .description-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: rgba(30, 10, 30, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  border-top: 2px solid #ff0055;
+  color: #ffe1ec;
+  font-size: 1.3em;
+  line-height: 1.6;
+  overflow-y: auto;
+}
+
+.card-overlay .close-button {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2em;
+  color: #ff77aa;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+  transition: color 0.3s ease;
+}
+
+.card-overlay .close-button:hover {
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 footer {
   background: #000;
-  padding: 20px;
+  padding: 75px;
   text-align: center;
   font-size: 0.9em;
-  color: #777;
+  color: #cc8aa0;
+  border-top: 2px solid #ff0055;
 }
 
 .page-header {
   padding: 10px 30px;
   text-align: left;
   margin-bottom: 40px;
+  background: linear-gradient(90deg, rgba(20, 0, 20, 0.85), rgba(60, 0, 40, 0.7));
+  border-bottom: 2px solid #ff0055;
+  box-shadow: 0 4px 12px rgba(255, 0, 85, 0.2);
+  backdrop-filter: blur(4px);
+  border-radius: 0 0 12px 12px;
 }
 
 .club-name {
   font-size: 3em;
   color: #ff0055;
-  margin-bottom: 10px;
   letter-spacing: -1px;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 2px #1a0d14;
 }
 
 .page-title {
   font-size: 1.8em;
-  color: #f6cacc;
-  opacity: 0.9;
-  margin-bottom: 5px;
+  color: #ff77aa;
+  opacity: 1;
+  text-shadow: 1px 1px 2px #0a0a0a;
 }
 
 .random-phrase {
   font-size: 1em;
-  color: #aaa;
+  color: #ffaad4;
   font-style: italic;
   margin-top: 10px;
+  text-shadow: 0 0 3px #ffaad4;
 }
 
 .container {
   max-width: 1600px;
   margin: 0 auto;
   padding: 0 30px;
+  margin-top: 200px;
+  margin-bottom: 50px;
 }

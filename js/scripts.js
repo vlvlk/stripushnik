@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const footerHTML = `
       <footer>
         &copy; 2025 Pan iz Polshi. Эстетика страсти.
+        <p>Ул. Пушкина, д. Колотушкина</p>
       </footer>
     `;
     document.body.insertAdjacentHTML("beforeend", footerHTML);
@@ -40,45 +41,64 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const phrase = document.getElementById("randomPhrase");
-
   if (phrase) {
     phrase.textContent = phrases[Math.floor(Math.random() * phrases.length)];
   }
 
-  // --- Логика увеличения карточек и показа описания ---
+  // --- Логика оверлея карточки ---
   const cards = document.querySelectorAll('.card');
+
+  const createOverlay = (card) => {
+    const img = card.querySelector('img');
+    const description = card.querySelector('.card-description');
+
+    if (!img || !description) return;
+
+    const overlay = document.createElement('div');
+    overlay.classList.add('card-overlay');
+
+    overlay.innerHTML = `
+      <button class="close-button" aria-label="Закрыть">&times;</button>
+      <img src="${img.src}" alt="">
+      <div class="description-text">${description.innerHTML}</div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    // Закрытие по кнопке
+    overlay.querySelector('.close-button').addEventListener('click', () => {
+      overlay.remove();
+    });
+
+    // Закрытие по клику вне контента
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.remove();
+    });
+  };
+
+  // Навешиваем обработчик клика на карточки
   cards.forEach(card => {
     card.addEventListener('click', () => {
-      // Убираем класс expanded у всех карточек кроме текущей
-      cards.forEach(c => {
-        if (c !== card) c.classList.remove('expanded');
-      });
-      // Переключаем класс у текущей
-      card.classList.toggle('expanded');
+      createOverlay(card);
     });
   });
 });
 
+// --- Логика автоскрытия хедера при скролле ---
 const header = document.querySelector('header');
 let lastScrollY = window.scrollY;
 let currentOffset = 0;
 
 window.addEventListener('scroll', () => {
   const delta = window.scrollY - lastScrollY;
-
-  // Получаем актуальную высоту хедера
   const maxOffset = header.offsetHeight;
 
   currentOffset += delta;
   currentOffset = Math.max(0, Math.min(currentOffset, maxOffset));
-
   header.style.transform = `translateY(${-currentOffset}px)`;
 
   lastScrollY = window.scrollY;
-});
 
-// Если прокручиваем в самый верх
-window.addEventListener('scroll', () => {
   if (window.scrollY === 0) {
     currentOffset = 0;
     header.style.transform = `translateY(0)`;
