@@ -363,4 +363,6 @@ header h1, header h2, .club-name, .page-title {
 .logo {
   height: 100px;
   width: auto;
+  max-width: 100%;
+  display: block;
 }
