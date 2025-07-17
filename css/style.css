@@ -5,12 +5,10 @@
   box-sizing: border-box;
 }
 
-/* Обёртка на весь экран */
 html, body {
   height: 100%;
 }
 
-/* Основное тело сайта как flex-контейнер */
 body {
   min-height: 100vh;
   display: flex;
@@ -41,18 +39,18 @@ header {
   box-shadow: 0 4px 15px rgba(255, 0, 85, 0.1);
 }
 
-/* Скрытое состояние хедера */
 header.hidden {
   transform: translateY(-100%);
 }
 
 header h1 {
-  font-size: 3em;
+  font-size: clamp(1.5em, 5vw, 3em);
   color: #ff0055;
   letter-spacing: -1px;
 }
+
 header h2 {
-  font-size: 2em;
+  font-size: clamp(1.2em, 4vw, 2em);
   color: #ff0055;
   letter-spacing: -1px;
 }
@@ -60,9 +58,10 @@ header h2 {
 nav {
   text-align: right;
 }
+
 nav a {
   display: block;
-  font-size: 2em;
+  font-size: clamp(1em, 3vw, 2em);
   margin-bottom: 8px;
   color: #ff77aa;
   text-decoration: none;
@@ -86,18 +85,11 @@ main {
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   margin-top: 20px;
-  align-items: stretch; /* Растягиваем карточки по высоте */
+  align-items: stretch;
 }
 
-@media (max-width: 600px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Карточки */
 .grid > * {
-  height: 100%; /* Чтобы карточки занимали всю высоту ячейки */
+  height: 100%;
 }
 
 .card {
@@ -105,12 +97,11 @@ main {
   padding: 20px;
   border-left: 5px solid #ff0055;
   border-radius: 10px;
-  position: relative; /* Важно для абсолютного позиционирования описания */
+  position: relative;
   cursor: pointer;
-  overflow: visible; /* Чтобы описание могло выходить за пределы, если надо */
+  overflow: visible;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 10px rgba(255, 0, 85, 0.3);
-
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -142,12 +133,12 @@ main {
 }
 
 .card.expanded {
+  padding-bottom: 120px;
   transform: scale(1.15);
   z-index: 10;
   box-shadow: 0 20px 30px rgba(255, 0, 85, 0.8);
 }
 
-/* Описание абсолютное внутри карточки */
 .card-description {
   position: absolute;
   left: 0;
@@ -170,16 +161,8 @@ main {
 }
 
 .card.expanded .card-description {
-  max-height: 500px; /* подстрой по содержанию */
+  max-height: 500px;
   opacity: 1;
-}
-
-/* Для .card.expanded увеличим padding-bottom, чтобы описание не накладывалось на контент */
-.card.expanded {
-  padding-bottom: 120px; /* подстраивай по высоте описания */
-  z-index: 10;
-  transform: scale(1.15);
-  box-shadow: 0 20px 30px rgba(255, 0, 85, 0.8);
 }
 
 .card-overlay {
@@ -194,7 +177,7 @@ main {
   display: flex;
   flex-direction: column;
   padding: 40px;
-  overflow: hidden; /* чтобы контент не вылазил за границы */
+  overflow: hidden;
   animation: fadeIn 0.3s ease;
 }
 
@@ -226,7 +209,8 @@ main {
   position: absolute;
   top: 20px;
   right: 30px;
-  font-size: 2em;
+  font-size: 2.5em;
+  padding: 10px;
   color: #ff77aa;
   background: none;
   border: none;
@@ -265,7 +249,7 @@ footer {
 }
 
 .club-name {
-  font-size: 3em;
+  font-size: clamp(1.8em, 4vw, 3em);
   color: #ff0055;
   letter-spacing: -1px;
   margin-bottom: 10px;
@@ -273,7 +257,7 @@ footer {
 }
 
 .page-title {
-  font-size: 1.8em;
+  font-size: clamp(1.2em, 3vw, 1.8em);
   color: #ff77aa;
   opacity: 1;
   text-shadow: 1px 1px 2px #0a0a0a;
@@ -293,4 +277,68 @@ footer {
   padding: 0 30px;
   margin-top: 200px;
   margin-bottom: 50px;
+}
+
+/* Адаптивность */
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .card img {
+    height: 300px;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  footer {
+    padding: 50px;
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 20px;
+  }
+
+  nav a {
+    font-size: 1.2em;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card img {
+    height: 200px;
+  }
+
+  .container {
+    margin-top: 120px;
+    padding: 0 15px;
+  }
+
+  .card-overlay {
+    padding: 20px;
+  }
+
+  .card-overlay .description-text {
+    font-size: 1em;
+  }
+
+  footer {
+    padding: 40px 20px;
+  }
+}
+
+.main-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 20px;
 }
